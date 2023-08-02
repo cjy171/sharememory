@@ -16,7 +16,6 @@ function Validation() {
     var mb_Name = document.getElementById("mb_Name")
     var mb_Tel = document.getElementById("mb_Tel")
     var mb_Gender = document.getElementById("mb_Gender")
-    var mb_Birth = document.getElementsByName("mb_Birth")
 
     //아이디 확인
     if(mb_ID.value.length <4){
@@ -58,82 +57,50 @@ function Validation() {
     }
 
 
-    //이름 확인 = 한글과 영어만 가능하도록
+    //이름 확인 = 한글만 가능하도록
     if(mb_Name.value == ""){
         alert("이름을 입력하세요.")
         mb_Name.focus();
         return false;
     }
     
-    else if(!checkKorEng(mb_Name.value)){
-        alert("한글, 영어만 입력하세요.")
+    else if(!checkKor(mb_Name.value)){
+        alert("한글만 입력하세요.")
         mb_Name.focus();
         return false;
     }
     
-     //관심분야 확인
+     //성별 체크
     if(!checkedGender(mb_Gender)){
-        alert("관심분야를 체크하세요.")
+        alert("성별을 체크하세요.")
         mb_Gender.focus();
         return false;
     }
 
-    //생일 확인
-    if(mb_Birth.value == ""){
-        alert("년도를 입력하세요.")
-        mb_Birth.focus();
-        return false;
-    }
 
-    else if(!(mb_Birth.value >=1900 && mb_Birth.value <= 2050)){
-        alert("년도를 정확하게 입력해주세요.")
-        mb_Birth.focus();
-        return false;
-    }
+}
 
-
+//전화번호 자동 하이픈
+const hypenTel = (target) => {
+ target.value = target.value
+   .replace(/[^0-9]/g, '').replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/, `$1-$2-$3`).replace(/(\-{1,2})$/g, "");
 }
 
 // 문자열이 영어, 숫자인지 확인하는 메서드 
 function checkEngNumber(value){
-    var count = 0;
-
-    for(var i=0; i<value.length; i++){
-        if((value.charCodeAt(i)>=65 && value.charCodeAt(i)<=90) || (value.charCodeAt(i)>=97 && value.charCodeAt(i)<=122) || (value.charCodeAt(i)>=48 && value.charCodeAt(i)<=57)){
-            count += 1;
-        }
-    }
-
-    //카운트 수와 문자의 길이가 같다면 true
-    if(count === (value.length)){
-        return true;
-    } else{
-        return false;
-    }
+    return /^[a-zA-Z0-9]*$/.test(value);
 }
 
 //영어, 한글인지(가~힣) 확인
-function checkKorEng(value){
-    var count = 0;
-
-    for(var i=0; i<value.length; i++){
-        console.log(value.charCodeAt(i));
-        if((value.charCodeAt(i)>=65 && value.charCodeAt(i)<=90) || (value.charCodeAt(i)>=97 && value.charCodeAt(i)<=122) || (value.charCodeAt(i)>=44032 && value.charCodeAt(i)<=55203)){
-            count += 1;
-        }
-    }
-
-    if(count === (value.length)){
-        return true;
-    } else{
-        return false;
-    }
+function checkKor(value){
+	return /^[가-힣]*$/.test(value);
 }
 
-//관심분야 체크 확인
-function checkedGender(mb_Gender){
-    for(var i=0; i<arr.length; i++){
-        if(arr[i].checked == true){
+//성별 체크 확인
+function checkedGender(){
+	var genders = document.getElementsByName("mb_Gender");
+    for(var i=0; i<genders.length; i++){
+        if(genders[i].checked){
             return true;
         }
     }
@@ -150,17 +117,17 @@ function checkedGender(mb_Gender){
 
 <form id="userinfoForm" action="joinAction.jsp" method="post" onsubmit="return Validation();">
 <div align="center">
-        아이디 <input type="text" name="id" placeholder="4글자 이상 영문 대소문자, 숫자만 입력하세요"><br>
-        비밀번호 <input type="text" name="pw" placeholder="4글자 이상 영문 대소문자, 숫자만 입력하세요"><br>
-        비밀번호 확인 <input type="text" name="cpw" placeholder="비밀번호를 다시 한 번 입력하세요"><br>
-        이름 <input type="text" name="name" placeholder="이름을 입력하세요"><br>
-        전화번호 <input type="text" name="tel" placeholder="010"><br>
-        성별<input type="checkbox" name="gender" value="computer">남성&nbsp;&nbsp;
-                <input type="checkbox" name="gender" value="internet">여성&nbsp;&nbsp;
-                <input type="checkbox" name="gender" value="travel">기타&nbsp;&nbsp;
+        아이디 <input type="text" name="mb_ID" placeholder="4글자 이상 영문 대소문자, 숫자만 입력하세요"><br>
+        비밀번호 <input type="password" name="mb_PW" placeholder="4글자 이상 영문 대소문자, 숫자만 입력하세요"><br>
+        비밀번호 확인 <input type="password" name="mb_CPW" placeholder="비밀번호를 다시 한 번 입력하세요"><br>
+        이름 <input type="text" name="mb_Name" placeholder="이름을 입력하세요"><br>
+        전화번호 <input type="text" name="mb_Tel" oninput="hypenTel(this)"><br>
+        성별<input type="radio" name="mb_Gender" value="남자">남자&nbsp;&nbsp;
+                <input type="radio" name="mb_Gender" value="여자">여자&nbsp;&nbsp;
+                <input type="radio" name="mb_Gender" value="기타">기타&nbsp;&nbsp;
     </div>
     <div align="center">
-        <input type="submit" value="화원가입">
+        <input type="submit" value="회원가입">
         <input type="reset" onclick="alert('초기화 했습니다.')" value="다시 입력">
         </div>
     </form>
