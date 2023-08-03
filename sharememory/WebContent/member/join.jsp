@@ -4,6 +4,8 @@
 <html>
 
 <head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 <title>회원가입</title>
 <script type="text/javascript">
 // 유효성 검사 메서드
@@ -117,19 +119,20 @@ function checkedGender(){
 
 <form id="userinfoForm" action="joinAction.jsp" method="post" onsubmit="return Validation();">
 <div align="center">
-        아이디 <input type="text" name="mb_ID" placeholder="4글자 이상 영문 대소문자, 숫자만 입력하세요"><br>
-        비밀번호 <input type="password" name="mb_PW" placeholder="4글자 이상 영문 대소문자, 숫자만 입력하세요"><br>
-        비밀번호 확인 <input type="password" name="mb_CPW" placeholder="비밀번호를 다시 한 번 입력하세요"><br>
-        이름 <input type="text" name="mb_Name" placeholder="이름을 입력하세요"><br>
-        전화번호 <input type="text" name="mb_Tel" oninput="hypenTel(this)"><br>
-        성별<input type="radio" name="mb_Gender" value="남자">남자&nbsp;&nbsp;
-                <input type="radio" name="mb_Gender" value="여자">여자&nbsp;&nbsp;
-                <input type="radio" name="mb_Gender" value="기타">기타&nbsp;&nbsp;
-    </div>
-    <div align="center">
-        <input type="submit" value="회원가입">
-        <input type="reset" onclick="alert('초기화 했습니다.')" value="다시 입력">
-        </div>
-    </form>
+	<h3>회원가입</h3>
+	아이디 <input type="text" name="mb_ID" placeholder="4글자 이상 영문 대소문자, 숫자만 입력하세요"><br>
+    비밀번호 <input type="password" name="mb_PW" placeholder="4글자 이상 영문 대소문자, 숫자만 입력하세요"><br>
+    비밀번호 확인 <input type="password" name="mb_CPW" placeholder="비밀번호를 다시 한 번 입력하세요"><br>
+    이름 <input type="text" name="mb_Name" placeholder="이름을 입력하세요"><br>
+    전화번호 <input type="text" name="mb_Tel" oninput="hypenTel(this)"><br>
+    성별<input type="radio" name="mb_Gender" value="남자">남자&nbsp;&nbsp;
+      <input type="radio" name="mb_Gender" value="여자">여자&nbsp;&nbsp;
+      <input type="radio" name="mb_Gender" value="기타">기타&nbsp;&nbsp;
+</div>
+<div align="center">
+	<input type="submit" value="회원가입">
+    <input type="reset" onclick="alert('초기화 했습니다.')" value="다시 입력">
+</div>
+</form>
 </body>
 </html>

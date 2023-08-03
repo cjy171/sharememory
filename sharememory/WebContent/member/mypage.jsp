@@ -4,15 +4,11 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>로그인 성공</title>
-<script>
-	function login(){
-		alert("로그인 되었습니다.");
-		location.href = '../index.jsp';
-	}
-	setTimeout(login, 500);	
-</script>
+<title>마이페이지</title>
 </head>
 <body>
+<h1>회원정보</h1>
+<p>머시기저시기</p>
+<p><b><a href="logoutAction.jsp" onclick="logout(); return false;">로그아웃</a></b></p>
 </body>
 </html>

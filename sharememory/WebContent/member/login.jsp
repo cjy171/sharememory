@@ -13,6 +13,7 @@
 	아이디:<input type="text" name="mb_ID"><br>
 	비밀번호:<input type="password" name="mb_PW"><br>
 	<input type="submit" value="로그인">
+	<input type="submit" value="회원가입">
 </form>
 </div>
 </body>
