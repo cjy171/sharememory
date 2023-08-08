@@ -7,11 +7,10 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 <title>회원가입</title>
-<script type="text/javascript">
+<script>
 // 유효성 검사 메서드
 function Validation() {
     // 변수에 저장
-    var mb_No = document.getElementById("mb_No")
     var mb_ID = document.getElementById("mb_ID")
     var mb_PW = document.getElementById("mb_PW")
     var mb_CPW = document.getElementById("mb_CPW")
@@ -45,7 +44,7 @@ function Validation() {
         return false;
     }
     //비밀번호와 아이디 비교
-    else if(mb_PW.value == mb_PW.value){
+    else if(mb_PW.value == mb_ID.value){
         alert("아이디와 동일한 비밀번호를 사용할 수 없습니다.")
         mb_PW.focus();
         return false;
@@ -111,13 +110,8 @@ function checkedGender(){
 </script>
 </head>
 <body>
-<br>
-<div align="center">
 
-</div>
-<br><br>
-
-<form id="userinfoForm" action="joinAction.jsp" method="post" onsubmit="return Validation();">
+<form name="userinfoForm" action="joinAction.jsp" method="post">
 <div align="center">
 	<h3>회원가입</h3>
 	아이디 <input type="text" name="mb_ID" placeholder="4글자 이상 영문 대소문자, 숫자만 입력하세요"><br>
@@ -127,10 +121,9 @@ function checkedGender(){
     전화번호 <input type="text" name="mb_Tel" oninput="hypenTel(this)"><br>
     성별<input type="radio" name="mb_Gender" value="남자">남자&nbsp;&nbsp;
       <input type="radio" name="mb_Gender" value="여자">여자&nbsp;&nbsp;
-      <input type="radio" name="mb_Gender" value="기타">기타&nbsp;&nbsp;
-</div>
-<div align="center">
-	<input type="submit" value="회원가입">
+      <input type="radio" name="mb_Gender" value="기타">기타&nbsp;&nbsp; <br>
+
+	<input type="submit" value="회원가입" onclick="Validation();">
     <input type="reset" onclick="alert('초기화 했습니다.')" value="다시 입력">
 </div>
 </form>

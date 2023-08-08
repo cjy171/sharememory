@@ -8,7 +8,9 @@
 </head>
 <body>
 <h1>회원정보</h1>
+<% String sessionId=(String)session.getAttribute("id");  %>
+ 아이디 : <%= sessionId %>
 <p>머시기저시기</p>
-<p><b><a href="logoutAction.jsp" onclick="logout(); return false;">로그아웃</a></b></p>
+<p><b><a href="logoutAction.jsp" onclick="logout(); return false;">로그아웃하기</a></b></p>
 </body>
 </html>

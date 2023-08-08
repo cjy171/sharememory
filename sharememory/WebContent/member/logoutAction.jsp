@@ -6,14 +6,15 @@
 <head>
 <meta charset="utf-8">
 <title>로그아웃</title>
+</head>
+<body>
+
 <script>
 	function logout(){
 		alert("로그아웃 되었습니다");
 		location.href = '../index.jsp';
 	}
-	setTimeout(logout, 500);	
+	logout();
 </script>
-</head>
-<body>
 </body>
 </html>
