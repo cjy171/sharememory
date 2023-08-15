@@ -11,41 +11,41 @@
 // 유효성 검사 메서드
 function Validation() {
     // 변수에 저장
-    var mb_ID = document.getElementById("mb_ID")
-    var mb_PW = document.getElementById("mb_PW")
-    var mb_CPW = document.getElementById("mb_CPW")
-    var mb_Name = document.getElementById("mb_Name")
-    var mb_Tel = document.getElementById("mb_Tel")
-    var mb_Gender = document.getElementById("mb_Gender")
+    var mb_ID = document.getElementById("mb_ID");
+    var mb_PW = document.getElementById("mb_PW");
+    var mb_CPW = document.getElementById("mb_CPW");
+    var mb_Name = document.getElementById("mb_Name");
+    var mb_Tel = document.getElementById("mb_Tel");
+    var mb_Gender = document.getElementById("mb_Gender");
 
     //아이디 확인
     if(mb_ID.value.length <4){
-        alert("아이디를 4글자 이상 입력하세요.")
+        alert("아이디를 4글자 이상 입력하세요.");
         mb_ID.focus();
         return false;
     }
     //아이디 영어 대소문자 확인
     else if(!checkEngNumber(mb_ID.value)){
-        alert("영문 대소문자, 숫자만 입력하세요.")
+        alert("영문 대소문자, 숫자만 입력하세요.");
         mb_ID.focus();
         return false;
     }
 
     //비밀번호 확인
     if(mb_PW.value.length <4){
-        alert("비밀번호를 4글자 이상 입력하세요.")
+        alert("비밀번호를 4글자 이상 입력하세요.");
         mb_PW.focus();
         return false;
     }
     //비밀번호 영어 대소문자 확인
     else if(!checkEngNumber(mb_PW.value)){
-        alert("영문 대소문자, 숫자만 입력하세요.")
+        alert("영문 대소문자, 숫자만 입력하세요.");
         mb_PW.focus();
         return false;
     }
     //비밀번호와 아이디 비교
     else if(mb_PW.value == mb_ID.value){
-        alert("아이디와 동일한 비밀번호를 사용할 수 없습니다.")
+        alert("아이디와 동일한 비밀번호를 사용할 수 없습니다.");
         mb_PW.focus();
         return false;
     }
@@ -123,7 +123,7 @@ function checkedGender(){
       <input type="radio" name="mb_Gender" value="여자">여자&nbsp;&nbsp;
       <input type="radio" name="mb_Gender" value="기타">기타&nbsp;&nbsp; <br>
 
-	<input type="submit" value="회원가입" onclick="Validation();">
+	<input type="submit" value="회원가입" onclick="return Validation();">
     <input type="reset" onclick="alert('초기화 했습니다.')" value="다시 입력">
 </div>
 </form>

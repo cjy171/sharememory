@@ -1,0 +1,35 @@
+@charset "UTF-8";
+.header {
+	height: 60px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100; /* 헤더를 최상위 레이어로 올리기 */
+}
+
+.body-content {
+    margin-top: 60px; /* 헤더의 높이만큼 본문을 아래로 밀어내기 */
+}
+
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+.btn-group {
+    margin-bottom: 10px;
+}
+
+.post-info {
+    margin-bottom: 20px;
+}
+
+.post-info td {
+    padding: 5px;
+}
+
+.back-btn {
+    margin-top: 10px;
+}

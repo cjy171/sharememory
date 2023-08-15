@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ page import="java.sql.*" %>
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -52,59 +53,78 @@
 
 <main>
 
-  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-<svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 800 400" focusable="false">
-    <rect width="100%" height="100%" fill="#333"/>
-</svg>
-        <div class="container">
-          <div class="carousel-caption text-start">
-            <h1>강릉 여행</h1>
-            <p>시원한 바다를 보면서 아이스크림 먹고 불명하고 놀고 먹고 자고 놀고 먹</p>
-            <p><a class="btn btn-lg btn-primary" href="#">블로그 보러가기</a></p>
-          </div>
+	
+        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        	<div class="carousel-indicators">
+      			 <%
+                int numItems = 3; // 가져올 아이템 개수
+                for (int i = 0; i < numItems; i++) {
+                %>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="<%= i %>" <% if (i == 0) { %>class="active"<% } %> aria-label="Slide <%= i+1 %>"></button>
+                <%
+                }
+                %>
+    		</div>
+            <div class="carousel-inner">
+                <%
+                try {
+                	Class.forName("com.mysql.jdbc.Driver");
+                    String db_address = "jdbc:mysql://localhost:3306/sharememory";
+                    String db_username = "root";
+                    String db_pwd = "abcd1234";
+                    
+                    Connection conn = DriverManager.getConnection(db_address, db_username, db_pwd);
+                    
+                    request.setCharacterEncoding("UTF-8");
+                    
+                    String query = "SELECT * FROM blog ORDER BY bg_ReadCount DESC LIMIT 3";
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+
+                    int itemCount = 0;
+                    while (rs.next()) {
+                        String postTitle = rs.getString("bg_Title");
+                        int postIdx = rs.getInt("bg_Idx");
+						String postContent = rs.getString("bg_Content");
+                        int postReadCount = rs.getInt("bg_ReadCount");
+                        %>
+                        <div class="carousel-item <%= itemCount == 0 ? "active" : "" %>">
+                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 800 400" focusable="false">
+                        <rect width="100%" height="100%" fill="<%= itemCount == 0 ? "#333" : (itemCount == 1 ? "#FFA500" : "#009000") %>"/>
+                    </svg>
+                    <div class="container">
+                        <div class="carousel-caption <%= itemCount == 0 ? "text-start" : (itemCount == 1 ? "" : "text-end") %>">
+                            <h1><%= postTitle %></h1>
+                            <p><%= postContent %></p>
+                            <p><a class="btn btn-lg btn-primary" href="../blog/post_read.jsp?bg_Idx=<%= postIdx %>">블로그 보러가기</a></p>
+                        </div>
+                    </div>
+                </div>
+                
+                        <%
+                        itemCount++;
+                    }
+                        rs.close();
+                        stmt.close();
+                    	conn.close();
+                    
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                %>
+            </div>
+            <!-- 이전/다음 버튼 -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      			<span class="visually-hidden">Previous</span>
+    		</button>
+    		<button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+      			<span class="visually-hidden">Next</span>
+    		</button>
         </div>
-      </div>
-      <div class="carousel-item">
-<svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 800 400" focusable="false">
-    <rect width="100%" height="100%" fill="#FFA500"/>
-</svg>
-      <div class="container">
-          <div class="carousel-caption">
-            <h1>뱅기 타고 제주도로!!</h1>
-            <p>비오는 제주도 돌덩이 갈치 애월 바다 입수</p>
-            <p><a class="btn btn-lg btn-primary" href="#">블로그 보러가기</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-<svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 800 400" focusable="false">
-    <rect width="100%" height="100%" fill="#009000"/>
-</svg>
-        <div class="container">
-          <div class="carousel-caption text-end">
-            <h1>재밌는 글램핑!</h1>
-            <p>숲 속에서 바다도 보고 물고기 잡고 고기 구워먹는 글램핑 갔다 왔다 갔다</p>
-            <p><a class="btn btn-lg btn-primary" href="#">블로그 보러가기</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
+
+
 
 
   <!-- Marketing messaging and featurettes

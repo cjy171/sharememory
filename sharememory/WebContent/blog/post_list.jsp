@@ -5,16 +5,23 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% String sessionId=(String)session.getAttribute("id");  %>
+<% String sessionId=(String)session.getAttribute("id");
+	if(sessionId == null) {
+		sessionId = ""; 
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>블로그 목록</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
+<%@ include file="../layout/header.jsp" %>
+<div class="body-content">
+<div class="container">
 	<form action="post_read.jsp" method="get">
-		<h1>블로그 목록</h1>
 		<%
 			try
 			{
@@ -33,43 +40,37 @@
 				PreparedStatement psmt = connection.prepareStatement(insertQuery);
 				
 				// 쿼리문을 전송해 받아온 정보를 result 객체에 저장
-				ResultSet result = psmt.executeQuery();%>
+				ResultSet result = psmt.executeQuery();
+				
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+				%>
+				<%
+            			if(sessionId != "") {
+            		%>
+					        <button type="button" value="신규 글 작성" onClick="location.href='post_new.jsp'">신규 글 작성</button>
+					<%
+            			}
+           			%>
 				
 				<table border="1">
 					<tr>
-						<td colspan="5">
-							<h3>게시글 제목 클릭시 상세 열람 가능</h3>
-						</td>
-					</tr>
-					<tr>
-					    <td colspan="5">
-					        <button type="button" value="신규 글 작성" onClick="location.href='post_new.jsp'">신규 글 작성</button>
-					    </td>
-					</tr>
-					<tr>
-						<td>번호</td>
 						<td>작성자</td>
 						<td>제목</td>
 						<td>작성일</td>
-						<td>관리</td>
 					</tr>
 					<%
-					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					while (result.next()){
+					%>
 					
-					while (result.next())
-					{%>
 						<tr>
-							<td><%=result.getInt("bg_Idx") %></td>
 							<td><%=result.getString("mb_ID") %></td>
 							<td><a href="post_read.jsp?bg_Idx=<%=result.getInt("bg_Idx") %>"><%=result.getString("bg_Title") %></a></td>
 							<td><%=dateFormat.format(result.getTimestamp("bg_Date")) %></td>
-							<td>
-								<button type="button" value="수정" onClick="location.href='post_modify.jsp?bg_Idx=<%=result.getString("bg_Idx") %>'">수정</button>
-								<button type="button" value="삭제" onClick="location.href='post_delete_send.jsp?bg_Idx=<%=result.getString("bg_Idx") %>'">삭제</button>
-							</td>
 						</tr>
 					<%
-					}%>
+						}
+					%>
 				</table>
 			<%
 			}
@@ -78,5 +79,11 @@
 				out.println("오류가 발생했습니다. 오류 메시지 : " + ex.getMessage());
 			}%>
 	</form>
+	</div>
+</div>	
+<%@ include file="../layout/footer.jsp" %>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	
 </body>
 </html>
