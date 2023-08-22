@@ -15,17 +15,17 @@ try
     
     request.setCharacterEncoding("UTF-8");
     
-    int bg_Idx = Integer.parseInt(request.getParameter("bg_Idx"));
+    String cmt_Idx = request.getParameter("cmt_Idx");
     
-    String deleteQuery = "DELETE FROM Blog WHERE bg_Idx= ? ";
+    String insertQuery = "DELETE FROM Comment WHERE cmt_Idx= ? ";
     
- 	PreparedStatement psmt = connection.prepareStatement(deleteQuery);
+ 	PreparedStatement psmt = connection.prepareStatement(insertQuery);
 
- 	psmt.setInt(1, bg_Idx);
- 	
+ 	psmt.setInt(1, Integer.parseInt(cmt_Idx));
+
     psmt.executeUpdate();
- 	
-    response.sendRedirect("post_list.jsp");
+ 	response.sendRedirect("post_read.jsp?bg_Idx=?");
+    
 }
 catch (Exception ex)
 {

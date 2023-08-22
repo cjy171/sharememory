@@ -49,16 +49,14 @@
 			
 			<table border="1">
 			<%
-			while (result.next()){
+				while (result.next()){
 					searchResult = true;
 					String postWriter = result.getString("mb_ID");
 					int postIdx = result.getInt("bg_Idx");
 					String postTitle = result.getString("bg_Title");
 					String postDate = dateFormat.format(result.getTimestamp("bg_Date"));
        		%>
-           	
-           	
-			<tr>
+           		<tr>
 					<td>작성자</td>
 					<td>제목</td>
 					<td>작성일</td>
@@ -70,18 +68,17 @@
 				</tr>
 			<%
 				}
-      			%>
-		</table>
+      		%>
+			</table>
 		<%
 		if(!searchResult){
 		%>
 		<p>검색 결과가 없습니다.</p>
 		<%
-			}
+		}
 		result.close();
         psmt.close();
         conn.close();
-			
 		}
 		catch (Exception ex)
 		{

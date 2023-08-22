@@ -26,15 +26,24 @@
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, mb_ID);
 		pstmt.setString(2, mb_PW);
-		
 		// sql실행
 		ResultSet rs = pstmt.executeQuery();
 		
 		if(rs.next()){ // 로그인 성공(인증의 수단 session)
 			mb_ID = rs.getString("mb_ID");
+			mb_PW = rs.getString("mb_PW");
+            String mb_Name = rs.getString("mb_Name");
+            String mb_Tel = rs.getString("mb_Tel");
+            String mb_Gender = rs.getString("mb_Gender");
+            String mb_JoinDate = rs.getString("mb_JoinDate");
 		
 			synchronized(session){
 				session.setAttribute("id", mb_ID);
+				session.setAttribute("pw", mb_PW);
+				session.setAttribute("name", mb_Name);
+				session.setAttribute("tel", mb_Tel);
+				session.setAttribute("gender", mb_Gender);
+				session.setAttribute("joindate", mb_JoinDate);
 			}
 
  %>

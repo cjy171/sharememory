@@ -17,33 +17,27 @@ try
     
     request.setCharacterEncoding("UTF-8");
     
- 	String mb_ID = request.getParameter("mb_ID");
- 	String bg_Title = request.getParameter("bg_Title");
- 	String bg_Content = request.getParameter("bg_Content");
-	int bg_Idx = Integer.parseInt(request.getParameter("bg_Idx"));
+    int cmt_Idx = Integer.parseInt(request.getParameter("cmt_Idx"));
+ 	String cmt_Content = request.getParameter("cmt_Content");
 
-    
-    String insertQuery = "UPDATE Blog SET bg_Title = ?, bg_Content = ? WHERE bg_Idx=?";
+ 	
+   
+    String insertQuery = "UPDATE Comment SET cmt_Content = ? WHERE cmt_Idx=?";
 
 	PreparedStatement psmt = connection.prepareStatement(insertQuery);
 	psmt = connection.prepareStatement(insertQuery);
 	
-	psmt.setString(1, bg_Title);
-	psmt.setString(2, bg_Content);
-	psmt.setInt(3, bg_Idx);
+	psmt.setString(1, cmt_Content);
+	psmt.setInt(2, cmt_Idx);
 	
 	psmt.executeUpdate();
 	connection.commit();
 	
-	%>
-		<script>
-			alert("수정이 완료되었습니다.");
-			location.href="post_list.jsp";
-		</script>
-	<%
 	
 	psmt.close();
 	connection.close();
+	
+	response.sendRedirect("post_read.jsp?bg_Idx= ?");
 }
 catch (Exception ex) {
 	ex.printStackTrace();

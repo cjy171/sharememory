@@ -5,8 +5,10 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% String sessionId=(String)session.getAttribute("id");  %>
-
+<% String cmt_Writer=(String)session.getAttribute("id");
+	if(cmt_Writer == null) {
+		cmt_Writer = ""; 
+	}%>
 <%
 try
 {
@@ -22,19 +24,17 @@ try
     request.setCharacterEncoding("UTF-8");
     
     // 오늘 날짜 정보를 컴퓨터에서 받아올 객체 선언
-	Timestamp bg_Date = new Timestamp(System.currentTimeMillis());
+	Timestamp cmt_Date = new Timestamp(System.currentTimeMillis());
     
     // 파라미터를 통해 정해진 정보를 받아와 각 문자열 변수에 저장
-	String mb_ID = sessionId;
-	String bg_Title = request.getParameter("bg_Title");
-	String bg_Content = request.getParameter("bg_Content");
-	int bg_ReadCount = 0;
+	int bg_Idx = Integer.parseInt(request.getParameter("bg_Idx"));
+	String cmt_Content = request.getParameter("cmt_Content");
 	
 	//게시글 번호를 결정하기 위한 임기 정수형 변수 선언
-	int bg_Idx = 0;
+	int cmt_Idx = 0;
 	
 	// MySQL로 전송하기 위한 쿼리문인 insertQuery 문자열 선언()
-	String insertQuery = "SELECT MAX(bg_Idx) from Blog";
+	String insertQuery = "SELECT MAX(cmt_Idx) from Comment";
 	
 	PreparedStatement psmt = connection.prepareStatement(insertQuery);
 	
@@ -42,25 +42,22 @@ try
 	
 	while(result.next())
 	{
-		bg_Idx = result.getInt("MAX(bg_Idx)") + 1;
+		cmt_Idx = result.getInt("MAX(cmt_Idx)") + 1;
 	}
 	
-	insertQuery = "INSERT INTO Blog(bg_Idx, bg_Title, mb_ID, bg_Content, bg_ReadCount, bg_Date) VALUES (?, ?, ?, ?, ?, ?)";
+	insertQuery = "INSERT INTO Comment(cmt_Idx, bg_Idx, mb_ID, cmt_Content, cmt_Date) VALUES (?, ?, ?, ?, ?)";
 	
 	psmt = connection.prepareStatement(insertQuery);
 	
-	psmt.setInt(1, bg_Idx);
-	psmt.setString(2, bg_Title);
-	psmt.setString(3, mb_ID);
-	psmt.setString(4, bg_Content);
-	psmt.setInt(5, bg_ReadCount);
-	psmt.setTimestamp(6, bg_Date);
+	psmt.setInt(1, cmt_Idx);
+	psmt.setInt(2, bg_Idx);
+	psmt.setString(3, cmt_Writer);
+	psmt.setString(4, cmt_Content);
+	psmt.setTimestamp(5, cmt_Date);
 	
 	psmt.executeUpdate();
 	
-	response.sendRedirect("post_list.jsp");
-	
-	connection.commit();
+	response.sendRedirect("post_read.jsp?bg_Idx=?");
 }
 catch (Exception ex)
 {

@@ -11,7 +11,7 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="index.jsp">Home</a>
+            <a class="nav-link active" aria-current="page" href="/index.jsp">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/blog/post_list.jsp">Blog</a>
@@ -23,7 +23,7 @@
             <a class="nav-link" href="/member/mypage.jsp">MyPage</a>
           </li>
           <li class="nav-item">
-          	<a href="#modalLayer" id="searchLink">SEARCH</a>
+          	<a class="nav-link" href="/blog/search.jsp">SEARCH</a>
           </li>
         </ul>
       </div>
@@ -43,7 +43,7 @@
             <a class="nav-link" href="/member/join.jsp">Join</a>
           </li>
           <li class="nav-item">
-          	<a href="#modalLayer" id="searchLink">SEARCH</a>
+          	<a class="nav-link" href="/blog/search.jsp">SEARCH</a>
           </li>
         </ul>
       </div>
